@@ -1,0 +1,258 @@
+@import url("https://rsms.me/inter/inter.css");
+
+:root {
+  --color-light: white;
+  --color-dark: #212121;
+  --color-signal: #fab700;
+
+  --color-background: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-accent: var(--color-signal);
+
+  --size-bezel: 1rem;
+  --size-radius: 4px;
+
+  line-height: 2.4;
+
+  font-family: "Inter", sans-serif;
+  font-size: calc(0.6rem + 0.4vw);
+  color: var(--color-text);
+  background: var(--color-background);
+  font-weight: 300;
+  padding: 0 0.5 * 3;
+}
+
+body {
+    margin: 0; /* Remove default margin */
+    padding: 0;
+}
+
+#home {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-image: url('img/codioful-formerly-gradienta-QWutu2BRpOs-unsplash.jpg'); /* Add your background image URL here */
+    background-size: cover;
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat;
+    
+}
+
+#header {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+#header h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: 1000;
+}
+
+#username {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 200px;
+    padding: 10px; /* Add some padding */
+    font-size: 16px; /* Increase font size */
+    outline: none; /* Remove default outline */
+    transition: border-color 0.3s ease;
+}
+
+#username:focus {
+    border-color: #fab700; /* Change border color on focus */
+}
+
+.container-center {
+    flex: 1; /* Grow to fill available space */
+    display: flex;
+    flex-direction: row;
+}
+
+.left,
+.right {
+  flex: 1; /* Distribute available space equally between the two columns */
+}
+
+.left {
+    justify-content: center;
+    align-items: flex-start;
+    display: flex;
+    flex: 1;
+    position: relative; /* Ensure the pseudo-element's positioning is relative to this div */
+}
+
+.left::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5px; /* Adjust the width as needed */
+    background-color: black; /* Color of the separator */
+    right: 0px; /* Adjust the positioning to ensure it's between the two divs */
+}
+
+.right {
+    padding-top: 50px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items at the start of the cross axis (top) */
+}
+
+h2, h3 {
+  font-weight: 500;
+}
+
+mark {
+  background: var(--color-accent);
+  color: var(--color-text);
+  font-weight: bold;
+  padding: 0 0.2em;
+}
+
+.card {
+  display: grid;
+  background: var(--color-background);
+  padding: calc(4 * var(--size-bezel));
+  margin-top: calc(4 * var(--size-bezel));
+  border-radius: var(--size-radius);
+  border: 3px solid var(--color-shadow, currentColor);
+  box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
+
+  &--inverted {
+    --color-background: var(--color-dark);
+    color: var(--color-light);
+    --color-shadow: var(--color-accent);
+  }
+
+  &--accent {
+    --color-background: var(--color-signal);
+    --color-accent: var(--color-light);
+    color: var(--color-dark);
+  }
+
+  *:first-child {
+    margin-top: 0;
+  }
+}
+
+.l-design-widht {
+  justify-content: center;
+  align-content: center;
+  min-width: 30rem;
+  max-width: 40rem;
+  padding: 1rem;
+}
+
+.input {
+  position: relative;
+}
+
+.input__label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * 0.5);
+    margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * 0.5);
+    background: pink;
+    white-space: nowrap;
+    transform: translate(0, 0);
+    transform-origin: 0 0;
+    background: var(--color-background);
+    transition: transform 120ms ease-in;
+    font-weight: bold;
+    line-height: 1.2;
+}
+.input__field {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border: 3px solid currentColor;
+    padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+    color: currentColor;
+    background: transparent;
+    border-radius: var(--size-radius);
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      & + .input__label {
+        transform: translate(0.25rem, -65%) scale(0.8);
+        color: var(--color-accent);
+      }
+    }
+}
+
+
+.button-group {
+  margin-top: calc(var(--size-bezel) * 2.5);
+}
+
+button {
+  color: currentColor;
+  padding: var(--size-bezel) calc(var(--size-bezel) * 2);
+  background: var(--color-accent);
+  border: none;
+  border-radius: var(--size-radius);
+  font-weight: 900;
+
+  &[type="reset"] {
+    background: var(--color-background);
+    font-weight: 200;
+  }
+}
+
+button + button {
+  margin-left: calc(var(--size-bezel) * 2);
+}
+
+.hidden {
+  display: none;
+}
+
+
+/* ===============================LOBBY================================= */
+
+
+#clientLobby {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+  
+#clientLobby h1 {
+    text-align: center;
+    padding-top: 20px; /* Add padding to the top */
+}
+  
+.lobby-container {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+}
+  
+.lobby-left,
+.lobby-right {
+    flex: 1;
+}
+  
+.lobby-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    max-width: 50%;
+}
+  
+.lobby-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black; /* Add border */
+    border-radius: 8px; /* Optional: Add border radius for rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 50%;
+}

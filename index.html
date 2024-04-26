@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NigNogNigaroo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="home">
+    <div id="header">
+      <h1>Multiplayer Game
+      <input id="username" type="text" placeholder="Enter your username"/>
+      </h1>
+    </div>
+
+    <div class="container-center">
+      <div class="left">
+        <div class="l-design-widht">
+          <div class="card">
+            <h2>Game Code</h2>
+
+            <label class="input">
+              <input class="input__field" type="text" id="sessionCodeInput" placeholder="" maxlength="6"/>
+              <span class="input__label">Enter 6 character code</span>
+            </label>
+
+            <div class="button-group">
+              <button onclick="joinSession()">Join Session</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <button onclick="createSession()">Create Session</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="clientLobby" style="display: none;">
+    <h1>Lobby</h1> <!--Head--> 
+    <div class = "lobby-container">
+      <div class = "lobby-left">current players in session
+        <div id="lobbyPlayers"></div> 
+      </div>
+  
+      <div class = "lobby-right">
+        <div class="container">
+          <div id="sessionCode"></div>
+        </div>
+      </div>
+    </div>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+
+  <script src="client.js"></script>
+  
+</body>
+</html>
