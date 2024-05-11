@@ -117,6 +117,14 @@ function joinSession(data, ws) {
   });
 }
 
+function getSessionPlayers(sessionCode) {
+  const session = sessions.get(sessionCode);
+  if (session) {
+    return session.players.map(player => ({ name: player.name }));
+  }
+  return [];
+}
+
 function broadcastToSession(sessionCode, data) {
   const session = sessions.get(sessionCode);
   if (session) {
