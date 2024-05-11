@@ -146,9 +146,8 @@ app.get('/', (req, res) => {
 });
 
 setInterval(() => {
-  console.log(`Total connected clients: ${connectedClients}`);
-  console.log(`Active sessions: ${sessions.size}`);
-}, 10000); // Log every 10 seconds
+  console.log(`Total connected clients: ${connectedClients}, Active sessions: ${sessions.size}`);
+}, 1000); // Log every 1 seconds
 
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
