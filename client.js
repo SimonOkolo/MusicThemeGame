@@ -54,8 +54,15 @@ function startGame() {
 }
 
 function showLobby(sessionCode) {
+  // Hide the home screen and display the client lobby screen
   document.getElementById('home').style.display = 'none';
   document.getElementById('clientLobby').style.display = 'block';
+
+  // Reset lobbyPlayers content
+  const lobbyPlayers = document.getElementById('lobbyPlayers');
+  lobbyPlayers.innerHTML = ''; // Clear lobbyPlayers div content
+
+  // Display the session code
   document.getElementById('sessionCode').innerText = `Session Code: ${sessionCode}`;
 }
 
@@ -68,7 +75,8 @@ function addPlayerToLobby(playerName) {
 
 function updateLobby(players) {
   const lobbyPlayers = document.getElementById('lobbyPlayers');
-  lobbyPlayers.innerHTML = '';
+  lobbyPlayers.innerHTML = ''; // Clear lobbyPlayers div content
+
   players.forEach((player) => {
     addPlayerToLobby(player.name);
   });
