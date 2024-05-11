@@ -35,6 +35,7 @@ function createSession() {
     console.error('Name field cannot be empty');
     return;
   }
+  playerElement = null;
   socket.send(JSON.stringify({ type: 'createSession', playerName: username }));
 }
 
