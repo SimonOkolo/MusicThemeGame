@@ -30,8 +30,6 @@ wss.on('connection', (ws) => {
   console.log(`A new client connected. Total connected clients: ${connectedClients}`);
 });
 
-
-
 function handleMessage(ws, data) {
   switch (data.type) {
     case 'createSession':
@@ -145,9 +143,24 @@ app.get('/', (req, res) => {
   res.send('Welcome to Multiplayer Game Server');
 });
 
+function getSessionPlayerNames(sessionCode) {
+  const session = sessions.get(sessionCode);
+  if (session) {
+    return session.players.map(player => player.name);
+  }
+  return [];
+}
+
+// Log total connected clients and active sessions with player names every 1 second
 setInterval(() => {
   console.log(`Total connected clients: ${connectedClients}, Active sessions: ${sessions.size}`);
-}, 1000); // Log every 1 seconds
+
+  // Log player names for each active session
+  sessions.forEach((session, sessionCode) => {
+    const playerNames = getSessionPlayerNames(sessionCode);
+    console.log(`Session ${sessionCode} Players: ${playerNames.join(', ')}`);
+  });
+}, 1000); // Log every 1 second
 
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
