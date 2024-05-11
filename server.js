@@ -145,6 +145,10 @@ app.get('/', (req, res) => {
   res.send('Welcome to Multiplayer Game Server');
 });
 
+setInterval(() => {
+  console.log(`Total connected clients: ${connectedClients}`);
+}, 10000); // Log every 10 seconds
+
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
