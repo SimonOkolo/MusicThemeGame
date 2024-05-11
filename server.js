@@ -53,11 +53,6 @@ function createSession(data, ws) {
   };
   sessions.set(sessionCode, sessionData);
   ws.send(JSON.stringify({ type: 'sessionCreated', sessionCode }));
-
-  // Send updated lobby list to all players
-  const players = Array.from(sessions.values())
-    .flatMap(session => session.players.map(player => ({ name: player.name })));
-    broadcastToAll({ type: 'updateLobby', players});
 }
 
 function broadcastToAll(data) {

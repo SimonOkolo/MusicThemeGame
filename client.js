@@ -57,6 +57,9 @@ function showLobby(sessionCode) {
   document.getElementById('home').style.display = 'none';
   document.getElementById('clientLobby').style.display = 'block';
   document.getElementById('sessionCode').innerText = `Session Code: ${sessionCode}`;
+  const players = Array.from(sessions.values())
+    .flatMap(session => session.players.map(player => ({ name: player.name })));
+    broadcastToAll({ type: 'updateLobby', players});
 }
 
 function addPlayerToLobby(playerName) {
