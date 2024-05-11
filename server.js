@@ -11,14 +11,10 @@ const wss = new WebSocket.Server({ server });
 // Map to store active sessions
 const sessions = new Map();
 
-// Variable to keep track of connected WebSocket clients
 let connectedClients = 0;
 
 // WebSocket connection handling
 wss.on('connection', (ws) => {
-  // Increment the connected clients count
-  connectedClients++;
-
   ws.on('message', (message) => {
     const data = JSON.parse(message);
     handleMessage(ws, data);
@@ -29,9 +25,12 @@ wss.on('connection', (ws) => {
     connectedClients--;
     console.log(`A client disconnected. Total connected clients: ${connectedClients}`);
   });
-
+  
+  connectedClients++;
   console.log(`A new client connected. Total connected clients: ${connectedClients}`);
 });
+
+
 
 function handleMessage(ws, data) {
   switch (data.type) {
@@ -69,15 +68,14 @@ function createSession(data, ws) {
   ws.send(JSON.stringify({ type: 'sessionCreated', sessionCode }));
 
   // Send updated lobby list to all players
-  broadcastToAll({ type: 'updateLobby', players: getSessionPlayers(sessionCode) });
-}
+  const players = []; // Initialize an empty array
 
-function getSessionPlayers(sessionCode) {
-  const session = sessions.get(sessionCode);
-  if (session) {
-    return session.players.map(player => ({ name: player.name }));
-  }
-  return [];
+  // Populate the players array with new values
+  Array.from(sessions.values())
+    .flatMap(session => session.players.map(player => ({ name: player.name })))
+    .forEach(player => players.push(player)); // Add new players to the array
+  
+  broadcastToAll({ type: 'updateLobby', players });
 }
 
 function broadcastToAll(data) {
@@ -146,11 +144,6 @@ function generateSessionCode() {
 app.get('/', (req, res) => {
   res.send('Welcome to Multiplayer Game Server');
 });
-
-// Log connected clients count every 10 seconds
-setInterval(() => {
-  console.log(`Total connected clients: ${connectedClients}`);
-}, 10000); // Log every 10 seconds
 
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
