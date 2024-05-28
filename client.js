@@ -67,6 +67,8 @@ function showLobby(sessionCode) {
 }
 
 function addPlayerToLobby(playerName) {
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('clientLobby').style.display = 'block';
   const lobbyPlayers = document.getElementById('lobbyPlayers');
   const playerElement = document.createElement('p');
   playerElement.innerText = playerName;
