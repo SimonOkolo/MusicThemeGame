@@ -98,7 +98,7 @@ function updateLobby(players) {
   }
 }
 
-function navigateToGame() {
+function goToGamePage() {
   document.getElementById('clientLobby').style.display = 'none';
   document.getElementById('gamePage').style.display = 'block';
 }
