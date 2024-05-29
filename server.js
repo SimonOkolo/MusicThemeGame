@@ -8,9 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-// Map to store active sessions
 const sessions = new Map();
-
 let connectedClients = 0;
 
 // WebSocket connection handling
@@ -37,6 +35,9 @@ function handleMessage(ws, data) {
       break;
     case 'joinSession':
       joinSession(data, ws);
+      break;
+    case 'joinTeam':
+      joinTeam(data, ws);
       break;
   }
 }
@@ -125,6 +126,29 @@ function getSessionPlayers(sessionCode) {
   return [];
 }
 
+function joinTeam(data, ws) {
+  const { sessionCode, playerName, team } = data;
+  if (!sessionCode || !playerName || !team) {
+    ws.send(JSON.stringify({ type: 'error', message: 'Session code, player name, and team cannot be empty' }));
+    return;
+  }
+  if (!sessions.has(sessionCode)) {
+    ws.send(JSON.stringify({ type: 'error', message: 'Session not found' }));
+    return;
+  }
+  const session = sessions.get(sessionCode);
+  const player = session.players.find(p => p.name === playerName);
+  if (player) {
+    player.team = team;
+    sessions.set(sessionCode, session);
+    session.players.forEach((p) => {
+      p.ws.send(JSON.stringify({ type: 'updateLobby', players: session.players.map(pl => ({ name: pl.name, team: pl.team })) }));
+    });
+  } else {
+    ws.send(JSON.stringify({ type: 'error', message: 'Player not found' }));
+  }
+}
+
 function broadcastToSession(sessionCode, data) {
   const session = sessions.get(sessionCode);
   if (session) {
@@ -137,13 +161,7 @@ function broadcastToSession(sessionCode, data) {
 }
 
 function generateSessionCode() {
-  // Generate a random 6-character alphanumeric code
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-  for (let i = 0; i < 6; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
 }
 
 // Handle root route ("/")

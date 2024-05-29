@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundwave Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="game">
+    <h1>Game</h1>
+    <div class="lobby-container">
+      <div class="lobby-left">
+        <h2>Players</h2>
+        <div id="lobbyPlayers"></div>
+      </div>
+      <div class="lobby-right">
+        <button onclick="joinTeam('A')">Join Team A</button>
+        <button onclick="joinTeam('B')">Join Team B</button>
+        <button onclick="joinTeam('C')">Join Team C</button>
+      </div>
+    </div>
+    <div id="gameContent">
+      <!-- Add your game content here -->
+    </div>
+    <button onclick="endGame()">End Game</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

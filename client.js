@@ -49,8 +49,9 @@ function joinSession() {
   socket.send(JSON.stringify({ type: 'joinSession', sessionCode, playerName: username }));
 }
 
-function startGame() {
-  // Implement game logic here
+function navigateToGame() {
+  const sessionCode = document.getElementById('sessionCode').innerText.replace('Session Code: ', '');
+  window.location.href = `game.html?sessionCode=${sessionCode}`;
 }
 
 function showLobby(sessionCode) {
