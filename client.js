@@ -80,7 +80,7 @@ function updateLobby(players) {
   }
 }
 
-function navigateToGamePage() {
+function navigateToGame() {
   document.getElementById('clientLobby').style.display = 'none';
   document.getElementById('gamePage').style.display = 'block';
 }
