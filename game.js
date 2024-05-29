@@ -1,10 +1,13 @@
 const urlParams = new URLSearchParams(window.location.search);
 const sessionCode = urlParams.get('sessionCode');
+const username = localStorage.getItem('username');
 const socket = new WebSocket('ws://192.168.1.189:3000');
 
 socket.addEventListener('open', (event) => {
   console.log('WebSocket connection established:', event);
-  socket.send(JSON.stringify({ type: 'joinSession', sessionCode, playerName: localStorage.getItem('username') }));
+  if (username && sessionCode) {
+    socket.send(JSON.stringify({ type: 'joinSession', sessionCode, playerName: username }));
+  }
 });
 
 socket.addEventListener('message', (event) => {
@@ -24,8 +27,11 @@ function handleMessage(data) {
 }
 
 function joinTeam(team) {
-  const playerName = localStorage.getItem('username');
-  socket.send(JSON.stringify({ type: 'joinTeam', sessionCode, playerName, team }));
+  if (sessionCode && username) {
+    socket.send(JSON.stringify({ type: 'joinTeam', sessionCode, playerName: username, team }));
+  } else {
+    console.error('Session code, player name, and team cannot be empty');
+  }
 }
 
 function updateLobby(players) {

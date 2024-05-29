@@ -35,7 +35,7 @@ function createSession() {
     console.error('Name field cannot be empty');
     return;
   }
-  playerElement = null;
+  localStorage.setItem('username', username);
   socket.send(JSON.stringify({ type: 'createSession', playerName: username }));
 }
 
@@ -46,6 +46,7 @@ function joinSession() {
     console.error('Name field and session code cannot be empty');
     return;
   }
+  localStorage.setItem('username', username);
   socket.send(JSON.stringify({ type: 'joinSession', sessionCode, playerName: username }));
 }
 
