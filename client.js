@@ -15,13 +15,16 @@ function handleMessage(data) {
       showLobby(data.sessionCode);
       break;
     case 'sessionJoined':
-      console.log('Session joined');
-      break;
-    case 'playerJoined':
-      addPlayerToLobby(data.playerName);
+      showLobby(data.sessionCode);
       break;
     case 'updateLobby':
       updateLobby(data.players);
+      break;
+    case 'gameStarted':
+      goToGamePage();
+      break;
+    case 'gameEnded':
+      goToHomePage();
       break;
     case 'error':
       console.error(data.message);
@@ -35,7 +38,6 @@ function createSession() {
     console.error('Name field cannot be empty');
     return;
   }
-  localStorage.setItem('username', username);
   socket.send(JSON.stringify({ type: 'createSession', playerName: username }));
 }
 
@@ -46,32 +48,36 @@ function joinSession() {
     console.error('Name field and session code cannot be empty');
     return;
   }
-  localStorage.setItem('username', username);
   socket.send(JSON.stringify({ type: 'joinSession', sessionCode, playerName: username }));
 }
 
-function navigateToGame() {
-  const sessionCode = document.getElementById('sessionCode').innerText.replace('Session Code: ', '');
-  window.location.href = `game.html?sessionCode=${sessionCode}`;
+function startGame() {
+  const sessionCode = document.getElementById('sessionCode').innerText.split(': ')[1];
+  socket.send(JSON.stringify({ type: 'startGame', sessionCode }));
+}
+
+function endGame() {
+  const sessionCode = document.getElementById('sessionCode').innerText.split(': ')[1];
+  socket.send(JSON.stringify({ type: 'endGame', sessionCode }));
+}
+
+function joinTeam(team) {
+  const sessionCode = document.getElementById('sessionCode').innerText.split(': ')[1];
+  const username = document.getElementById('username').value;
+  socket.send(JSON.stringify({ type: 'joinTeam', sessionCode, playerName: username, team }));
+}
+
+function leaveSession() {
+  const sessionCode = document.getElementById('sessionCode').innerText.split(': ')[1];
+  socket.send(JSON.stringify({ type: 'leaveSession', sessionCode }));
+  goToHomePage();
 }
 
 function showLobby(sessionCode) {
   document.getElementById('home').style.display = 'none';
   document.getElementById('clientLobby').style.display = 'block';
-
-  const lobbyPlayers = document.getElementById('lobbyPlayers');
-  lobbyPlayers.innerHTML = ''; // Clear lobbyPlayers div content
-
   document.getElementById('sessionCode').innerText = `Session Code: ${sessionCode}`;
-}
-
-function addPlayerToLobby(playerName) {
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('clientLobby').style.display = 'block';
-  const lobbyPlayers = document.getElementById('lobbyPlayers');
-  const playerElement = document.createElement('p');
-  playerElement.innerText = playerName;
-  lobbyPlayers.appendChild(playerElement);
+  updateLobby([]);
 }
 
 function updateLobby(players) {
@@ -79,6 +85,26 @@ function updateLobby(players) {
   lobbyPlayers.innerHTML = ''; // Clear lobbyPlayers div content
 
   players.forEach((player) => {
-    addPlayerToLobby(player.name);
+    const playerElement = document.createElement('p');
+    playerElement.innerText = `${player.name} - ${player.team ? player.team : 'No team'}`;
+    lobbyPlayers.appendChild(playerElement);
   });
+
+  const currentUser = players.find(p => p.name === document.getElementById('username').value);
+  if (currentUser && currentUser.isHost) {
+    document.getElementById('hostControls').style.display = 'block';
+  } else {
+    document.getElementById('hostControls').style.display = 'none';
+  }
+}
+
+function goToGamePage() {
+  document.getElementById('clientLobby').style.display = 'none';
+  document.getElementById('gamePage').style.display = 'block';
+}
+
+function goToHomePage() {
+  document.getElementById('clientLobby').style.display = 'none';
+  document.getElementById('gamePage').style.display = 'none';
+  document.getElementById('home').style.display = 'block';
 }
