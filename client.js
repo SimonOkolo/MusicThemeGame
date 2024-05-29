@@ -58,8 +58,18 @@ function navigateToGame() {
 function showLobby(sessionCode) {
   document.getElementById('home').style.display = 'none';
   document.getElementById('clientLobby').style.display = 'block';
+
+  const lobbyPlayers = document.getElementById('lobbyPlayers');
+  lobbyPlayers.innerHTML = ''; // Clear lobbyPlayers div content
+
   document.getElementById('sessionCode').innerText = `Session Code: ${sessionCode}`;
-  updateLobby([]);
+}
+
+function addPlayerToLobby(playerName) {
+  const lobbyPlayers = document.getElementById('lobbyPlayers');
+  const playerElement = document.createElement('p');
+  playerElement.innerText = playerName;
+  lobbyPlayers.appendChild(playerElement);
 }
 
 function updateLobby(players) {
@@ -67,26 +77,6 @@ function updateLobby(players) {
   lobbyPlayers.innerHTML = ''; // Clear lobbyPlayers div content
 
   players.forEach((player) => {
-    const playerElement = document.createElement('p');
-    playerElement.innerText = `${player.name} - ${player.team ? player.team : 'No team'}`;
-    lobbyPlayers.appendChild(playerElement);
+    addPlayerToLobby(player.name);
   });
-
-  const currentUser = players.find(p => p.name === document.getElementById('username').value);
-  if (currentUser && currentUser.isHost) {
-    document.getElementById('hostControls').style.display = 'block';
-  } else {
-    document.getElementById('hostControls').style.display = 'none';
-  }
-}
-
-function goToGamePage() {
-  document.getElementById('clientLobby').style.display = 'none';
-  document.getElementById('gamePage').style.display = 'block';
-}
-
-function goToHomePage() {
-  document.getElementById('clientLobby').style.display = 'none';
-  document.getElementById('gamePage').style.display = 'none';
-  document.getElementById('home').style.display = 'block';
 }
