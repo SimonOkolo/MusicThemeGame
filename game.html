@@ -1,35 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Game</title>
-  <script src="client.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundwave Game</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="home" style="display: block;">
-    <input type="text" id="username" placeholder="Enter your name">
-    <button onclick="createSession()">Create Session</button>
-    <input type="text" id="sessionCodeInput" placeholder="Enter session code">
-    <button onclick="joinSession()">Join Session</button>
-  </div>
-  <div id="clientLobby" style="display: none;">
-    <h2>Lobby</h2>
-    <p id="sessionCode"></p>
-    <div id="lobbyPlayers"></div>
-    <div id="hostControls" style="display: none;">
-      <button onclick="startGame()">Start Game</button>
-      <button onclick="endGame()">End Game</button>
+  <div id="game">
+    <h1>Game</h1>
+    <div class="lobby-container">
+      <div class="lobby-left">
+        <h2>Players</h2>
+        <div id="lobbyPlayers"></div>
+      </div>
+      <div class="lobby-right">
+        <button onclick="joinTeam('A')">Join Team A</button>
+        <button onclick="joinTeam('B')">Join Team B</button>
+        <button onclick="joinTeam('C')">Join Team C</button>
+      </div>
     </div>
-    <div>
-      <button onclick="joinTeam('Team1')">Join Team 1</button>
-      <button onclick="joinTeam('Team2')">Join Team 2</button>
-      <button onclick="joinTeam('Team3')">Join Team 3</button>
+    <div id="gameContent">
+      <!-- Add your game content here -->
     </div>
-    <button onclick="leaveSession()">Leave Session</button>
-  </div>
-  <div id="gamePage" style="display: none;">
-    <h2>Game Page</h2>
-    <p>The game has started!</p>
     <button onclick="endGame()">End Game</button>
   </div>
+
+  <script src="game.js"></script>
 </body>
 </html>
