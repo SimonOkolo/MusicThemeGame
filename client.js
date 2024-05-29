@@ -56,32 +56,68 @@ function navigateToGame() {
 }
 
 function showLobby(sessionCode) {
-  // Hide the home screen and display the client lobby screen
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('clientLobby').style.display = 'block';
+  const homeElement = document.getElementById('home');
+  const clientLobbyElement = document.getElementById('clientLobby');
+  const sessionCodeElement = document.getElementById('sessionCode');
+  const hostControlsElement = document.getElementById('hostControls');
 
-  // Reset lobbyPlayers content
-  const lobbyPlayers = document.getElementById('lobbyPlayers');
-  lobbyPlayers.innerHTML = ''; // Clear lobbyPlayers div content
+  if (!homeElement || !clientLobbyElement || !sessionCodeElement || !hostControlsElement) {
+    console.error('One or more elements not found in the DOM');
+    return;
+  }
 
-  // Display the session code
-  document.getElementById('sessionCode').innerText = `Session Code: ${sessionCode}`;
-}
-
-function addPlayerToLobby(playerName) {
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('clientLobby').style.display = 'block';
-  const lobbyPlayers = document.getElementById('lobbyPlayers');
-  const playerElement = document.createElement('p');
-  playerElement.innerText = playerName;
-  lobbyPlayers.appendChild(playerElement);
+  homeElement.style.display = 'none';
+  clientLobbyElement.style.display = 'block';
+  sessionCodeElement.innerText = `Session Code: ${sessionCode}`;
+  updateLobby([]);
 }
 
 function updateLobby(players) {
   const lobbyPlayers = document.getElementById('lobbyPlayers');
+  if (!lobbyPlayers) {
+    console.error('Lobby players element not found');
+    return;
+  }
+
   lobbyPlayers.innerHTML = ''; // Clear lobbyPlayers div content
 
   players.forEach((player) => {
-    addPlayerToLobby(player.name);
+    const playerElement = document.createElement('p');
+    playerElement.innerText = `${player.name} - ${player.team ? player.team : 'No team'}`;
+    lobbyPlayers.appendChild(playerElement);
   });
+
+  const currentUser = players.find(p => p.name === document.getElementById('username').value);
+  const hostControlsElement = document.getElementById('hostControls');
+  if (hostControlsElement) {
+    hostControlsElement.style.display = currentUser && currentUser.isHost ? 'block' : 'none';
+  }
+}
+
+function goToGamePage() {
+  const clientLobbyElement = document.getElementById('clientLobby');
+  const gamePageElement = document.getElementById('gamePage');
+
+  if (!clientLobbyElement || !gamePageElement) {
+    console.error('Client lobby or game page element not found');
+    return;
+  }
+
+  clientLobbyElement.style.display = 'none';
+  gamePageElement.style.display = 'block';
+}
+
+function goToHomePage() {
+  const homeElement = document.getElementById('home');
+  const clientLobbyElement = document.getElementById('clientLobby');
+  const gamePageElement = document.getElementById('gamePage');
+
+  if (!homeElement || !clientLobbyElement || !gamePageElement) {
+    console.error('Home, client lobby, or game page element not found');
+    return;
+  }
+
+  clientLobbyElement.style.display = 'none';
+  gamePageElement.style.display = 'none';
+  homeElement.style.display = 'block';
 }
