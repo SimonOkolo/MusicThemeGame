@@ -91,8 +91,10 @@ function updateLobby(players) {
     lobbyPlayers.appendChild(playerElement);
   });
 
-  const currentUser = players.find(p => p.name === document.getElementById('username').value);
-  // Assuming hostControls exists in the lobby page
+  // Find the current user
+  const currentUsername = document.getElementById('username').value;
+  const currentUser = players.find(p => p.name === currentUsername);
+
   const hostControls = document.getElementById('hostControls');
   if (currentUser && currentUser.isHost && hostControls) {
     hostControls.style.display = 'block';

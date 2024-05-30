@@ -183,7 +183,7 @@ function handleDisconnection(ws) {
 function updateLobbyForAllPlayers(sessionCode) {
   const session = sessions.get(sessionCode);
   if (session) {
-    const players = session.players.map(player => ({ name: player.name, team: player.team }));
+    const players = session.players.map(player => ({ name: player.name, team: player.team, isHost: player.ws === session.owner }));
     session.players.forEach(player => {
       if (player.ws.readyState === WebSocket.OPEN) {
         player.ws.send(JSON.stringify({ type: 'updateLobby', players }));
@@ -191,6 +191,7 @@ function updateLobbyForAllPlayers(sessionCode) {
     });
   }
 }
+
 
 function generateSessionCode() {
   return Math.random().toString(36).substring(2, 8).toUpperCase();
