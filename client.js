@@ -94,7 +94,7 @@ function updateLobby(players) {
   }
 }
 
-function goToGamePage() {
+function navigateToGame() {
   const clientLobbyElement = document.getElementById('clientLobby');
   const gamePageElement = document.getElementById('gamePage');
 
