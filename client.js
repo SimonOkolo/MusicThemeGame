@@ -6,6 +6,7 @@ socket.addEventListener('open', (event) => {
 
 socket.addEventListener('message', (event) => {
   const data = JSON.parse(event.data);
+  console.log('Received message:', data);
   handleMessage(data);
 });
 
@@ -91,14 +92,17 @@ function updateLobby(players) {
   });
 
   const currentUser = players.find(p => p.name === document.getElementById('username').value);
-  if (currentUser && currentUser.isHost) {
-    document.getElementById('hostControls').style.display = 'block';
-  } else {
-    document.getElementById('hostControls').style.display = 'none';
+  // Assuming hostControls exists in the lobby page
+  const hostControls = document.getElementById('hostControls');
+  if (currentUser && currentUser.isHost && hostControls) {
+    hostControls.style.display = 'block';
+  } else if (hostControls) {
+    hostControls.style.display = 'none';
   }
 }
 
 function goToGamePage() {
+  console.log('Navigating to game page...');
   document.getElementById('clientLobby').style.display = 'none';
   document.getElementById('gamePage').style.display = 'block';
 }

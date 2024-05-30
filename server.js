@@ -125,7 +125,9 @@ function startGame(data, ws) {
 
   session.started = true;
   session.players.forEach(player => {
-    player.ws.send(JSON.stringify({ type: 'gameStarted' }));
+    if (player.ws.readyState === WebSocket.OPEN) {
+      player.ws.send(JSON.stringify({ type: 'gameStarted' }));
+    }
   });
 }
 
