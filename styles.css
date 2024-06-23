@@ -1,9 +1,11 @@
 @import url("https://rsms.me/inter/inter.css");
+@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
 :root {
   --color-light: white;
   --color-dark: #212121;
-  --color-signal: #fab700;
+  --color-signal: #ff92e4;
 
   --color-background: var(--color-light);
   --color-text: var(--color-dark);
@@ -31,38 +33,49 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-image: url('img/codioful-formerly-gradienta-QWutu2BRpOs-unsplash.jpg'); /* Add your background image URL here */
-    background-size: cover;
+    background-image: url('img/Backdrop.png'); /* Add your background image URL here */
+    background-size: fill;
     background-position: center; /* Center the background image */
     background-repeat: no-repeat;
     
 }
 
 #header {
-    text-align: center;
-    padding-bottom: 20px;
+    text-align: left;
+    padding-bottom: 0px;
 }
 
 #header h1 {
     color: #333;
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
+    margin-left: 50px;
+    margin-top: 0px;
+    font-family: "Honk", system-ui;
     font-weight: 1000;
+    font-size: 70px;
 }
 
 #username {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 200px;
+    margin-left: 100px;
+    width: 200px;
+    max-height: 40px;
     padding: 10px; /* Add some padding */
+    font-family: "Orbitron", sans-serif;
     font-size: 16px; /* Increase font size */
     outline: none; /* Remove default outline */
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    border: 2px solid rgb(255, 219, 121); /* Add border */
+    border-radius: var(--size-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+    background-color: #fffbec; /* Change background color */
+    color: var(--color-dark); /* Change text color */
 }
 
 #username:focus {
-    border-color: #fab700; /* Change border color on focus */
+    border-color: rgb(255, 212, 94); /* Change border color on focus */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow on focus */
+    transform: scale(1.05); /* Slightly increase size on focus */
 }
 
 .container-center {
@@ -71,35 +84,12 @@ body {
     flex-direction: row;
 }
 
-.left,
-.right {
-  flex: 1; /* Distribute available space equally between the two columns */
-}
-
 .left {
     justify-content: center;
     align-items: flex-start;
     display: flex;
     flex: 1;
     position: relative; /* Ensure the pseudo-element's positioning is relative to this div */
-}
-
-.left::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 5px; /* Adjust the width as needed */
-    background-color: black; /* Color of the separator */
-    right: 0px; /* Adjust the positioning to ensure it's between the two divs */
-}
-
-.right {
-    padding-top: 50px;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Align items at the start of the cross axis (top) */
 }
 
 h2, h3 {
@@ -115,6 +105,7 @@ mark {
 
 .card {
   display: grid;
+  font-family: "Orbitron", sans-serif;
   background: var(--color-background);
   padding: calc(4 * var(--size-bezel));
   margin-top: calc(4 * var(--size-bezel));
@@ -137,6 +128,10 @@ mark {
   *:first-child {
     margin-top: 0;
   }
+}
+
+.sessionCodeInput {
+  font-family: "Orbitron", sans-serif;
 }
 
 .l-design-widht {
@@ -196,6 +191,7 @@ button {
   background: var(--color-accent);
   border: none;
   border-radius: var(--size-radius);
+  font-family: "Orbitron", sans-serif;
   font-weight: 900;
 
   &[type="reset"] {
