@@ -1,8 +1,25 @@
-const socket = new WebSocket('ws://192.168.1.189:3000');
+let socket;
 
-socket.addEventListener('open', (event) => {
-  console.log('WebSocket connection established:', event);
-});
+function connectWebSocket() {
+  socket = new WebSocket('ws://192.168.1.189:3000');
+
+  socket.addEventListener('open', (event) => {
+    console.log('WebSocket connection established:', event);
+  });
+
+  socket.addEventListener('close', () => {
+    console.log('WebSocket disconnected. Attempting to reconnect...');
+    setTimeout(connectWebSocket, 5000);
+  });
+
+  socket.addEventListener('message', (event) => {
+    const data = JSON.parse(event.data);
+    console.log('Received message:', data);
+    handleMessage(data);
+  });
+}
+
+connectWebSocket();
 
 function displayError(message) {
   const errorDiv = document.createElement('div');
@@ -11,12 +28,6 @@ function displayError(message) {
   document.body.appendChild(errorDiv);
   setTimeout(() => errorDiv.remove(), 5000);
 }
-
-socket.addEventListener('message', (event) => {
-  const data = JSON.parse(event.data);
-  console.log('Received message:', data);
-  handleMessage(data);
-});
 
 function handleMessage(data) {
   switch (data.type) {
@@ -36,7 +47,7 @@ function handleMessage(data) {
       goToHomePage();
       break;
     case 'error':
-      console.error(data.message);
+      displayError(data.message);
       break;
   }
 }
