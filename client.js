@@ -1,25 +1,19 @@
-let socket;
+const socket = new WebSocket('ws://192.168.1.189:3000');
 
-function connectWebSocket() {
-  socket = new WebSocket('ws://192.168.1.189:3000');
+socket.addEventListener('open', (event) => {
+  console.log('WebSocket connection established:', event);
+});
 
-  socket.addEventListener('open', (event) => {
-    console.log('WebSocket connection established:', event);
-  });
+socket.addEventListener('close', () => {
+  console.log('WebSocket disconnected. Attempting to reconnect...');
+  setTimeout(connectWebSocket, 5000);
+});
 
-  socket.addEventListener('close', () => {
-    console.log('WebSocket disconnected. Attempting to reconnect...');
-    setTimeout(connectWebSocket, 5000);
-  });
-
-  socket.addEventListener('message', (event) => {
-    const data = JSON.parse(event.data);
-    console.log('Received message:', data);
-    handleMessage(data);
-  });
-}
-
-connectWebSocket();
+socket.addEventListener('message', (event) => {
+  const data = JSON.parse(event.data);
+  console.log('Received message:', data);
+  handleMessage(data);
+});
 
 function displayError(message) {
   const errorDiv = document.createElement('div');
