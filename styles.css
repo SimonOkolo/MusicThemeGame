@@ -16,7 +16,7 @@
 
   line-height: 2.4;
 
-  font-family: "Inter", sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: calc(0.6rem + 0.4vw);
   color: var(--color-text);
   background: var(--color-background);
@@ -187,6 +187,7 @@ mark {
 
 button {
   color: currentColor;
+  max-width: 200px;
   padding: var(--size-bezel) calc(var(--size-bezel) * 2);
   background: var(--color-accent);
   border: none;
@@ -216,15 +217,24 @@ button + button {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    background-image: url('img/Backdrop.png'); /* Add your background image URL here */
+    background-size: fill;
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat;
 }
   
 #clientLobby h1 {
-    text-align: center;
-    padding-top: 20px; /* Add padding to the top */
+    text-align: left;
+    margin-left: 50px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-family: "Honk", system-ui;
+    font-weight: 1000;
+    font-size: 70px;
 }
   
 .lobby-container {
-    flex: 1;
+    margin-left: 50px;
     display: flex;
     justify-content: center; /* Center horizontally */
 }
@@ -243,8 +253,8 @@ button + button {
 }
   
 .lobby-right {
-    flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 2px solid black; /* Add border */
