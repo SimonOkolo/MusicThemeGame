@@ -208,6 +208,16 @@ button + button {
   display: none;
 }
 
+@media (max-width: 768px) {
+  .lobby-container {
+    flex-direction: column;
+  }
+  
+  .lobby-left,
+  .lobby-right {
+    max-width: 100%;
+  }
+}
 
 /* ===============================LOBBY================================= */
 

@@ -4,6 +4,14 @@ socket.addEventListener('open', (event) => {
   console.log('WebSocket connection established:', event);
 });
 
+function displayError(message) {
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'error-message';
+  errorDiv.textContent = message;
+  document.body.appendChild(errorDiv);
+  setTimeout(() => errorDiv.remove(), 5000);
+}
+
 socket.addEventListener('message', (event) => {
   const data = JSON.parse(event.data);
   console.log('Received message:', data);
